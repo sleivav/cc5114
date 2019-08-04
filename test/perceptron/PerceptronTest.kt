@@ -1,8 +1,7 @@
-import perceptron.AndPerceptron
+package perceptron
+
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import perceptron.NandPerceptron
-import perceptron.OrPerceptron
 
 internal class PerceptronTest {
     @Test
