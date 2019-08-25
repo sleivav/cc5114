@@ -24,7 +24,7 @@ class LearningPerceptron(weightsNumber: Int, learningRate: Double) : Perceptron 
         this.bias += this.bias + this.learningRate * diff
     }
 
-    fun calculateOutputandLearn(inputList: List<Int>, desiredOutput: Int) {
+    fun calculateOutputAndLearn(inputList: List<Int>, desiredOutput: Int) {
         val output = this.calculateOutput(inputList, this.weights, this.bias)
         this.learnFromOutput(inputList, output, desiredOutput)
     }
