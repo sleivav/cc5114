@@ -25,6 +25,7 @@ class LearningPerceptron(weightsNumber: Int, learningRate: Double) : Perceptron 
     }
 
     fun calculateOutputAndLearn(inputList: List<Int>, desiredOutput: Int) {
+        require(inputList.size==this.weights.size) {"El número de inputs pasados no es correcto para esta neurona"}
         val output = this.calculateOutput(inputList, this.weights, this.bias)
         this.learnFromOutput(inputList, output, desiredOutput)
     }
