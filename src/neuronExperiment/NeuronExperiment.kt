@@ -1,13 +1,14 @@
 package neuronExperiment
 
+import activationFunction.step
 import classificationLine.classificationLine
 import perceptron.LearningPerceptron
 import kotlin.random.Random
 
-class neuronExperiment(val trainings: Int, val pointNumbers: Int) {
+class NeuronExperiment(private val trainings: Int, private val pointNumbers: Int) {
 
     fun runExperiment() {
-        val perceptron = LearningPerceptron(2, 0.1)
+        val perceptron = LearningPerceptron(2, 0.1, step())
         val rng = Random(1234)
         val minX = -10.0
         val minY = -10.0
@@ -53,5 +54,5 @@ class neuronExperiment(val trainings: Int, val pointNumbers: Int) {
 }
 
 fun main(args: Array<String>) {
-    neuronExperiment(100, 100).runExperiment()
+    NeuronExperiment(100, 100).runExperiment()
 }
