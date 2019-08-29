@@ -28,12 +28,12 @@ class LearningPerceptron(weightsNumber: Int, learningRate: Double, activationFun
 
     fun calculateOutputAndLearn(inputList: List<Double>, desiredOutput: Double): Double {
         require(inputList.size==this.weights.size) {"El número de inputs pasados no es correcto para esta neurona"}
-        val output = this.calculateOutput(inputList, this.weights, this.bias)
+        val output = this.calculateOutput(inputList)
         this.learnFromOutput(inputList, output, desiredOutput)
         return output
     }
 
-    override fun calculateOutput(inputList: List<Double>, weightList: List<Double>, bias: Double): Double {
-        return super.calculateOutput(inputList, weightList, bias)
+    fun calculateOutput(inputList: List<Double>): Double {
+        return super.calculateOutput(inputList, this.weights, this.bias)
     }
 }
