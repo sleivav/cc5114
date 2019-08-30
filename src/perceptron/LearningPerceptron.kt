@@ -9,7 +9,7 @@ class LearningPerceptron(weightsNumber: Int, learningRate: Double, activationFun
     private var learningRate: Double by Delegates.notNull()
     private val rng: Random = Random(5114)
     private var bias: Double = rng.nextDouble(-2.0, 2.0)
-    override val function: ActivationFunction = activationFunction
+    override var function: ActivationFunction = activationFunction
 
     init {
         this.learningRate = learningRate
