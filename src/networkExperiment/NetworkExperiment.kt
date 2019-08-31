@@ -1,5 +1,6 @@
 package networkExperiment
 
+import neuralNetwork.NeuralNetwork
 import java.io.File
 
 class NetworkExperiment {
@@ -48,9 +49,17 @@ class NetworkExperiment {
 
     private fun createhotLists(classMap: Map<String, Int>) {
         for(c in classes) {
-            val hotlist = mutableListOf<Double>(0.0, 0.0, 0.0, 0.0, 0.0)
+            val hotlist = mutableListOf<Double>(0.0, 0.0, 0.0)
             hotlist[classMap.getValue(c)] = 1.0
             classesHotlist.add(hotlist)
+        }
+    }
+
+    fun rewriteData() {
+        val writer = File("data/irisNormalized.data").printWriter().use { out ->
+            for((i, line) in sepalLenghts.withIndex()) {
+                out.println("${sepalLenghts[i]},${sepalWidths[i]},${petalLenghts[i]},${petalWidths[i]},${classesHotlist[i]}")
+            }
         }
     }
 }
@@ -60,4 +69,7 @@ fun main() {
     experiment.readData()
     experiment.normalizeData()
     experiment.hotEncode()
+    experiment.rewriteData()
+    val netWork = NeuralNetwork(3, listOf(5, 3, 4), 5, 5)
+
 }
