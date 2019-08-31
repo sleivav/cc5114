@@ -36,7 +36,8 @@ class LearningPerceptron(weightsNumber: Int, learningRate: Double, activationFun
     }
 
     fun calculateOutput(inputList: List<Double>): Double {
-        return super.calculateOutput(inputList, this.weights, this.bias)
+        output = super.calculateOutput(inputList, this.weights, this.bias)
+        return output
     }
 
     fun adjust(error: Double) {
