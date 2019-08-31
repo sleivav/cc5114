@@ -12,7 +12,7 @@ class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: 
 
     init {
         layersList.add(NeuralLayer(neuronsByLayer[0], null))
-        for(i in 1..layers) {
+        for(i in 1 until layers) {
             layersList.add(NeuralLayer(neuronsByLayer[i], layersList[i-1]))
             layersList[i-1].nextLayer = layersList[i]
         }
