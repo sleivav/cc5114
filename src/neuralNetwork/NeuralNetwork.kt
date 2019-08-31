@@ -12,7 +12,7 @@ class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: 
 
     init {
         layersList.add(NeuralLayer(neuronsByLayer[0], null))
-        for(i in 1 until layers) {
+        for(i in 1..layers) {
             layersList.add(NeuralLayer(neuronsByLayer[i], layersList[i-1]))
             layersList[i-1].nextLayer = layersList[i]
         }
@@ -27,7 +27,7 @@ class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: 
     }
 
     fun train(input: List<Double>, expectedOutput: List<Double>) {
-        val output = predict(input)
+        output = predict(input)
         backPropagate(expectedOutput)
         updateWeight(input)
     }
