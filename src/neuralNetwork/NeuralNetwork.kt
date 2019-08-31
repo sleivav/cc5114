@@ -3,12 +3,14 @@ package neuralNetwork
 import activationFunction.ActivationFunction
 import networkExperiment.TrainingSet
 import kotlin.math.pow
+import kotlin.random.Random
 
-class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: Int, numberOfOutputs: Int) {
+class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: Int) {
     val layersList: MutableList<NeuralLayer> = mutableListOf()
     var output: Int = 0
     val precision: MutableList<Double> = mutableListOf()
     val error: MutableList<Double> = mutableListOf()
+    val rng: Random = Random(1234)
 
     init {
         layersList.add(NeuralLayer(neuronsByLayer[0], null))
@@ -47,10 +49,9 @@ class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: 
 
     fun trainEpochs(epochs: Int, trainingSets: List<TrainingSet>) {
         for (i in 0 until epochs) {
-            trainingSets.shuffled()
             var correctPredictions = 0
             var totalError = 0.0
-            for((input, correctOutputs) in trainingSets) {
+            for((input, correctOutputs) in trainingSets.shuffled(rng)) {
                 train(input, correctOutputs)
                 val expectedOutput = correctOutputs.indexOf(correctOutputs.max())
                 if(output == expectedOutput) correctPredictions++
