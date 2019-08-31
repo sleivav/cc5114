@@ -1,6 +1,7 @@
 package neuralNetwork
 
 import activationFunction.ActivationFunction
+import networkExperiment.TrainingSet
 import kotlin.math.pow
 
 class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: Int, numberOfOutputs: Int) {
@@ -61,4 +62,3 @@ class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: 
     }
 }
 
-data class TrainingSet(val inputs: List<Double>, val outputs: List<Double>)
