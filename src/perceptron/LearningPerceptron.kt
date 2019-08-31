@@ -5,11 +5,13 @@ import kotlin.properties.Delegates
 import kotlin.random.Random
 
 class LearningPerceptron(weightsNumber: Int, learningRate: Double, activationFunction: ActivationFunction) : Perceptron {
-    private var weights: MutableList<Double> = mutableListOf()
+    var weights: MutableList<Double> = mutableListOf()
     private var learningRate: Double by Delegates.notNull()
     private val rng: Random = Random(5114)
     private var bias: Double = rng.nextDouble(-2.0, 2.0)
     override var function: ActivationFunction = activationFunction
+    var delta: Double = 0.0
+    var output: Double = 0.0
 
     init {
         this.learningRate = learningRate
@@ -35,5 +37,13 @@ class LearningPerceptron(weightsNumber: Int, learningRate: Double, activationFun
 
     fun calculateOutput(inputList: List<Double>): Double {
         return super.calculateOutput(inputList, this.weights, this.bias)
+    }
+
+    fun adjust(error: Double) {
+        delta = error * transferDerivative(output)
+    }
+
+    private fun transferDerivative(output: Double): Double {
+        return function.derivative(output)
     }
 }
