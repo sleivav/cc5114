@@ -1,11 +1,13 @@
 package neuralNetwork
 
 import activationFunction.ActivationFunction
+import kotlin.math.pow
 
 class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: Int, numberOfOutputs: Int) {
     val layersList: MutableList<NeuralLayer> = mutableListOf()
     var output: Int = 0
     val precision: MutableList<Double> = mutableListOf()
+    val error: MutableList<Double> = mutableListOf()
 
     init {
         layersList.add(NeuralLayer(neuronsByLayer[0], null))
@@ -50,11 +52,15 @@ class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: 
         for (i in 0 until epochs) {
             trainingSets.shuffled()
             var correctPredictions = 0
+            var totalError = 0.0
             for((input, correctOutputs) in trainingSets) {
                 train(input, correctOutputs)
-                if(output == correctOutputs.indexOf(correctOutputs.max())) correctPredictions++
+                val expectedOutput = correctOutputs.indexOf(correctOutputs.max())
+                if(output == expectedOutput) correctPredictions++
+                else totalError += (output - expectedOutput).toDouble().pow(2)
             }
             precision.add(correctPredictions.toDouble() / trainingSets.size * 100)
+            error.add(totalError / trainingSets.size)
         }
     }
 }
