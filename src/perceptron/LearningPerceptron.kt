@@ -46,4 +46,11 @@ class LearningPerceptron(weightsNumber: Int, learningRate: Double, activationFun
     private fun transferDerivative(output: Double): Double {
         return function.derivative(output)
     }
+
+    fun updateWeightsAndBias(inputs: List<Double>) {
+        for ((index, input) in inputs.withIndex()) {
+            weights[index] += learningRate * delta * input
+        }
+        bias += learningRate * delta
+    }
 }

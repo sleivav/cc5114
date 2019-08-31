@@ -4,6 +4,8 @@ import activationFunction.ActivationFunction
 
 class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: Int, numberOfOutputs: Int) {
     val layersList: MutableList<NeuralLayer> = mutableListOf()
+    var output: Int = 0
+    val precision: MutableList<Double> = mutableListOf()
 
     init {
         layersList.add(NeuralLayer(neuronsByLayer[0], null))
@@ -43,4 +45,18 @@ class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: 
     fun updateWeight(input: List<Double>) {
         layersList[0].updateWeights(input)
     }
+
+    fun trainEpochs(epochs: Int, trainingSets: List<TrainingSet>) {
+        for (i in 0 until epochs) {
+            trainingSets.shuffled()
+            var correctPredictions = 0
+            for((input, correctOutputs) in trainingSets) {
+                train(input, correctOutputs)
+                if(output == correctOutputs.indexOf(correctOutputs.max())) correctPredictions++
+            }
+            precision.add(correctPredictions.toDouble() / trainingSets.size * 100)
+        }
+    }
 }
+
+data class TrainingSet(val inputs: List<Double>, val outputs: List<Double>)

@@ -22,15 +22,11 @@ class NeuralLayer(private val neurons: Int, private val previousLayer: NeuralLay
     }
 
     fun feed(input: List<Double>): List<Double> {
-        for((index, perceptron) in neuronsArray.withIndex()) outputs[index] = perceptron!!.calculateOutput(input)
+        for((index, perceptron) in neuronsArray.withIndex()) {
+            outputs[index] = perceptron!!.calculateOutput(input)
+        }
         return nextLayer?.feed(outputs) ?: outputs
     }
-
-    /*fun train(input: List<Double>, expectedOutput: List<Double>) {
-        outputsfeed(input)
-        previousLayer?.backPropagate(expectedOutput)
-        updateWeighsAndBias()
-    }*/
 
     fun backPropagate(expectedOutput: List<Double>) {
         for((index, perceptron) in neuronsArray.withIndex()) {
@@ -52,6 +48,19 @@ class NeuralLayer(private val neurons: Int, private val previousLayer: NeuralLay
     }
 
     fun updateWeights(input: List<Double>) {
-
+        val inputs: List<Double>
+        inputs = if (previousLayer == null) {
+            input
+        } else {
+            val previousLayerOutput: MutableList<Double> = mutableListOf()
+            for (perceptron in previousLayer.neuronsArray) {
+                previousLayerOutput.add(perceptron!!.output)
+            }
+            previousLayerOutput
+        }
+        for(perceptron in neuronsArray) {
+            perceptron?.updateWeightsAndBias(inputs)
+        }
+        nextLayer?.updateWeights(input)
     }
 }
