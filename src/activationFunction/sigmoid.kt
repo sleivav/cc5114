@@ -8,6 +8,6 @@ class sigmoid : ActivationFunction {
     }
 
     override fun derivative(x: Double): Double {
-        return this.apply(x) * (1 * this.apply(x))
+        return this.apply(x) * (1 - this.apply(x))
     }
 }
