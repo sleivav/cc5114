@@ -11,14 +11,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class networkGraph {
-    public networkGraph(List<Double> points) {
+    public networkGraph(List<Double> points, String title, String xTitle, String yTitle) {
 
-        XYChart chart = new XYChartBuilder().width(800).height(600).title("Puntitos").xAxisTitle("X").yAxisTitle("Y").build();
+        XYChart chart = new XYChartBuilder().width(800).height(600).title(title).xAxisTitle(xTitle).yAxisTitle(yTitle).build();
 
-        chart.getStyler().setChartTitleVisible(false);
         chart.getStyler().setLegendVisible(false);
-        chart.getStyler().setAxisTitlesVisible(false);
-        chart.getStyler().setXAxisDecimalPattern("0.0000000");
 
         List<Integer> xPoints = IntStream.rangeClosed(0, points.size() - 1)
                 .boxed().collect(Collectors.toList());

@@ -14,7 +14,7 @@ class NetworkExperiment {
     private val classes: MutableList<String> = mutableListOf()
     private val classesHotlist: MutableList<List<Double>> = mutableListOf()
     private val trainingSets: MutableList<TrainingSet> = mutableListOf()
-    private val rng: Random = Random(1234)
+    private val rng: Random = Random(4321)
 
     fun readData() {
         File("data/Iris.data").forEachLine {
@@ -71,7 +71,7 @@ class NetworkExperiment {
     fun addLinesToTrainingSet(network: NeuralNetwork) {
         var lines: MutableList<String> = mutableListOf()
         File("data/irisNormalized.data").readLines().forEach { lines.add(it) }
-        lines.shuffle()
+        lines.shuffle(rng)
         for (i in 0 until (lines.size*0.8).toInt()) {
             feedLineToNetWork(lines[i], network)
         }
@@ -103,8 +103,8 @@ class NetworkExperiment {
     }
 
     fun makePrecisionAndErrorGraphs(network: NeuralNetwork) {
-        networkGraph(network.precision)
-        networkGraph(network.error)
+        networkGraph(network.precision, "Precisión de la Red Neuronal", "Épocas", "Precisión (%)")
+        networkGraph(network.error, "Error de la Red Neuronal", "Épocas", "Error")
     }
 }
 
