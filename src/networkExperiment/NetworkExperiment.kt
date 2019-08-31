@@ -2,9 +2,9 @@ package networkExperiment
 
 import activationFunction.ActivationFunction
 import activationFunction.sigmoid
-import activationFunction.step
 import neuralNetwork.NeuralNetwork
 import java.io.File
+import kotlin.random.Random
 
 class NetworkExperiment {
     private val sepalLenghts: MutableList<Double> = mutableListOf()
@@ -14,6 +14,7 @@ class NetworkExperiment {
     private val classes: MutableList<String> = mutableListOf()
     private val classesHotlist: MutableList<List<Double>> = mutableListOf()
     private val trainingSets: MutableList<TrainingSet> = mutableListOf()
+    private val rng: Random = Random(1234)
 
     fun readData() {
         File("data/Iris.data").forEachLine {
@@ -100,6 +101,11 @@ class NetworkExperiment {
         for (i in 1 until network.layersList.size)
         network.configureLayerFunction(activationFunction, i, neuronsByLayer[i-1], 0.1)
     }
+
+    fun makePrecisionAndErrorGraphs(network: NeuralNetwork) {
+        networkGraph(network.precision)
+        networkGraph(network.error)
+    }
 }
 
 data class TrainingSet(val inputs: List<Double>, val outputs: List<Double>)
@@ -110,10 +116,10 @@ fun main() {
     experiment.normalizeData()
     experiment.hotEncode()
     experiment.rewriteData()
-    val neuronsByLayer = listOf(4, 3, 2, 4)
-    val network = NeuralNetwork(3, neuronsByLayer, 4, 3)
+    val neuronsByLayer = listOf(4, 3)
+    val network = NeuralNetwork(2, neuronsByLayer, 4)
     experiment.addLinesToTrainingSet(network)
     experiment.configureNetwork(network, sigmoid(), neuronsByLayer)
     experiment.makeNetworkTrain(network, 100)
-    print('a')
+    experiment.makePrecisionAndErrorGraphs(network)
 }
