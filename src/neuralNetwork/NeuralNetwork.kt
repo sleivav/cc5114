@@ -35,10 +35,6 @@ class NeuralNetwork(layers: Int, neuronsByLayer: List<Int>, val numberOfInputs: 
         layersList.last().backPropagate(expectedOutput)
     }
 
-    fun normalize(x: Double, min: Double, max: Double): Double {
-        return (x-min) / (max-min)
-    }
-
     fun predict(inputs: List<Double>): Int {
         val outputs = feed(inputs)
         return outputs.indexOf(outputs.max())
