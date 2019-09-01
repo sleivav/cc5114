@@ -1,14 +1,14 @@
 package neuronExperiment
 
-import activationFunction.step
-import classificationLine.classificationLine
+import activationFunction.Step
+import classificationLine.ClassificationLine
 import perceptron.LearningPerceptron
 import kotlin.random.Random
 
 class NeuronExperiment(private val trainings: Int, private val pointNumbers: Int) {
 
     fun runExperiment() {
-        val perceptron = LearningPerceptron(2, 0.1, step())
+        val perceptron = LearningPerceptron(2, 0.1, Step())
         val rng = Random(1234)
         val minX = -10.0
         val minY = -10.0
@@ -18,7 +18,7 @@ class NeuronExperiment(private val trainings: Int, private val pointNumbers: Int
         for (i in 0..trainings) {
             val m = rng.nextDouble(-10.0, 10.0)
             val n = 0.0
-            val classLine = classificationLine(m, n)
+            val classLine = ClassificationLine(m, n)
             val pointsX: MutableList<Double> = mutableListOf()
             val pointsY: MutableList<Double> = mutableListOf()
             val outputs: MutableList<Double> = mutableListOf()
@@ -44,7 +44,7 @@ class NeuronExperiment(private val trainings: Int, private val pointNumbers: Int
         this.drawAccuracyGraph(accuracies)
     }
 
-    fun drawPointsGraph(classificationLine: classificationLine, pointsX: List<Double>, pointsY: List<Double>, outputs: List<Double>, m: Double, n: Double) {
+    fun drawPointsGraph(classificationLine: ClassificationLine, pointsX: List<Double>, pointsY: List<Double>, outputs: List<Double>, m: Double, n: Double) {
         linePlot(classificationLine, pointsX, pointsY, outputs, m, n)
     }
 

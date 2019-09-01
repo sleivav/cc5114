@@ -1,6 +1,6 @@
 package neuronExperiment;
 
-import classificationLine.classificationLine;
+import classificationLine.ClassificationLine;
 import org.knowm.xchart.*;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class linePlot {
-    public linePlot(classificationLine classLine, List<Double> pointsX, List<Double> pointsY, List<Double> outputs, Double m, Double n) {
+    public linePlot(ClassificationLine classLine, List<Double> pointsX, List<Double> pointsY, List<Double> outputs, Double m, Double n) {
 
         XYChart chart = new XYChartBuilder().width(800).height(600).title("Puntitos").xAxisTitle("X").yAxisTitle("Y").build();
 
