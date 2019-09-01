@@ -2,7 +2,7 @@ package activationFunction
 
 import kotlin.math.exp
 
-class sigmoid : ActivationFunction {
+class Sigmoid : ActivationFunction {
     override fun apply(x: Double): Double {
         return 1.0 / (1.0 + exp(-x))
     }
