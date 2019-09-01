@@ -170,14 +170,16 @@ data class TrainingSet(val inputs: List<Double>, val outputs: List<Double>)
 
 fun main() {
     val experiment = NetworkExperiment()
-    experiment.readData()
-    experiment.normalizeData()
-    experiment.hotEncode()
-    experiment.rewriteData()
     val neuronsByLayer = listOf(4, 3)
     val network = NeuralNetwork(2, neuronsByLayer, 4)
-    experiment.addLinesToTrainingSet()
-    experiment.configureNetwork(network, Sigmoid(), neuronsByLayer)
-    experiment.makeNetworkTrain(network, 100)
-    experiment.makePrecisionAndErrorGraphs(network)
+    with(experiment) {
+        readData()
+        normalizeData()
+        hotEncode()
+        rewriteData()
+        addLinesToTrainingSet()
+        configureNetwork(network, Sigmoid(), neuronsByLayer)
+        makeNetworkTrain(network, 100)
+        makePrecisionAndErrorGraphs(network)
+    }
 }
