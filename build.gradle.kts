@@ -40,5 +40,5 @@ dependencies {
 
 application {
     // Define the main class for the application
-    mainClassName = "cc5114/src.cc5114.src.networkExperiment.cc5114.src.networkExperiment"
+    mainClassName = "cc5114.src.networkExperiment.NetworkExperimentKt"
 }

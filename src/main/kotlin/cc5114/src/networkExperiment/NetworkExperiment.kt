@@ -173,7 +173,7 @@ class NetworkExperiment {
 
 data class TrainingSet(val inputs: List<Double>, val outputs: List<Double>)
 
-fun main() {
+fun main(args: Array<String>) {
     val experiment = NetworkExperiment()
     val neuronsByLayer = listOf(4, 3)
     val network = NeuralNetwork(2, neuronsByLayer, 4)
