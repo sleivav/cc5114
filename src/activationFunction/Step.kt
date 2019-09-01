@@ -1,6 +1,6 @@
 package activationFunction
 
-class step: ActivationFunction {
+class Step: ActivationFunction {
     override fun apply(x: Double): Double {
         return when(x <= 0) {
             true -> 0.0
