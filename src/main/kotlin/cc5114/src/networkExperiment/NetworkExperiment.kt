@@ -17,6 +17,9 @@ class NetworkExperiment {
     private val classes: MutableList<String> = mutableListOf()
     private val classesHotlist: MutableList<List<Double>> = mutableListOf()
     private val trainingSets: MutableList<TrainingSet> = mutableListOf()
+    private val predictionSets: MutableList<TrainingSet> = mutableListOf()
+    private val predictions: MutableList<Int> = mutableListOf()
+    private val correctOutputs: MutableList<Int> = mutableListOf()
     private val rng: Random = Random(4321)
 
     /**
@@ -107,6 +110,9 @@ class NetworkExperiment {
         for (i in 0 until (lines.size*0.8).toInt()) {
             feedLineToNetWork(lines[i])
         }
+        for (i in (lines.size*0.8).toInt() until lines.size) {
+            addLineToPredictionSet(lines[i])
+        }
     }
 
     /**
@@ -115,6 +121,15 @@ class NetworkExperiment {
     private fun feedLineToNetWork(line: String) {
         val splittedLine = line.split(",".toRegex(), 5)
         trainingSets.add(TrainingSet(listOf(splittedLine[0].toDouble(), splittedLine[1].toDouble(), splittedLine[2].toDouble(), splittedLine[3].toDouble()),
+            stringToList(splittedLine[4])))
+    }
+
+    /**
+     * Función auxiliar que agrega líneas al predictionSet
+     */
+    private fun addLineToPredictionSet(line: String) {
+        val splittedLine = line.split(",".toRegex(), 5)
+        predictionSets.add(TrainingSet(listOf(splittedLine[0].toDouble(), splittedLine[1].toDouble(), splittedLine[2].toDouble(), splittedLine[3].toDouble()),
             stringToList(splittedLine[4])))
     }
 
@@ -169,6 +184,25 @@ class NetworkExperiment {
         )
         networkGraph(network.error, "Error de la Red Neuronal", "Épocas", "Error")
     }
+
+    fun feedPredictionSetsToNetwork(network: NeuralNetwork) {
+        for (set in predictionSets) {
+            predictions.add(network.predict(set.inputs))
+            correctOutputs.add(set.outputs.indexOf(set.outputs.max()))
+        }
+    }
+
+    fun printConfusionData() {
+        val map: MutableMap<String, Int> =
+            mutableMapOf("0,1" to 0,"0,2" to 0, "1,0" to 0, "1,2" to 0, "2,0" to 0, "2,1" to 0)
+        for (i in predictions.indices) {
+            if (map.contains("${predictions[i]},${correctOutputs[i]}")) {
+                map["${predictions[i]},${correctOutputs[i]}"] =
+                    map.getValue("${predictions[i]},${correctOutputs[i]}") + 1
+            }
+        }
+        print(map)
+    }
 }
 
 data class TrainingSet(val inputs: List<Double>, val outputs: List<Double>)
@@ -186,5 +220,7 @@ fun main(args: Array<String>) {
         configureNetwork(network, Sigmoid(), neuronsByLayer)
         makeNetworkTrain(network, 100)
         makePrecisionAndErrorGraphs(network)
+        feedPredictionSetsToNetwork(network)
+        printConfusionData()
     }
 }
