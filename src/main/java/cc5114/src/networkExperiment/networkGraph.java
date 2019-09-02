@@ -1,10 +1,8 @@
 package cc5114.src.networkExperiment;
 
-import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -22,6 +20,12 @@ public class networkGraph {
         XYSeries linePoints = chart.addSeries("Line", xPoints, points);
         linePoints.setLineWidth(5.0f);
 
-        new SwingWrapper(chart).displayChart();
+        //new SwingWrapper(chart).displayChart();
+
+        try {
+            BitmapEncoder.saveBitmap(chart, "./charts/" + title, BitmapEncoder.BitmapFormat.PNG);
+        } catch (IOException e) {
+            System.err.println("No se pudo acceder al archivo para guardar los gráficos");
+        }
     }
 }
