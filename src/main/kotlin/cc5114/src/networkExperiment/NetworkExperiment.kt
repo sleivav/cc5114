@@ -194,12 +194,20 @@ class NetworkExperiment {
 
     fun printConfusionData() {
         val map: MutableMap<String, Int> =
-            mutableMapOf("0,1" to 0,"0,2" to 0, "1,0" to 0, "1,2" to 0, "2,0" to 0, "2,1" to 0)
+            mutableMapOf(
+                "0,0" to 0,
+                "0,1" to 0,
+                "0,2" to 0,
+                "1,0" to 0,
+                "1,1" to 0,
+                "1,2" to 0,
+                "2,0" to 0,
+                "2,1" to 0,
+                "2,2" to 0
+            )
         for (i in predictions.indices) {
-            if (map.contains("${predictions[i]},${correctOutputs[i]}")) {
-                map["${predictions[i]},${correctOutputs[i]}"] =
-                    map.getValue("${predictions[i]},${correctOutputs[i]}") + 1
-            }
+            map["${predictions[i]},${correctOutputs[i]}"] =
+                map.getValue("${predictions[i]},${correctOutputs[i]}") + 1
         }
         print(map)
     }
@@ -219,7 +227,7 @@ fun main(args: Array<String>) {
         addLinesToTrainingSet()
         configureNetwork(network, Sigmoid(), neuronsByLayer)
         makeNetworkTrain(network, 100)
-        makePrecisionAndErrorGraphs(network)
+        //makePrecisionAndErrorGraphs(network)
         feedPredictionSetsToNetwork(network)
         printConfusionData()
     }
