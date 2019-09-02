@@ -209,7 +209,7 @@ class NetworkExperiment {
             map["${predictions[i]},${correctOutputs[i]}"] =
                 map.getValue("${predictions[i]},${correctOutputs[i]}") + 1
         }
-        print(map)
+        File("data/confusionMatrix.data").printWriter().use { it.println(map) }
     }
 }
 
@@ -227,7 +227,7 @@ fun main(args: Array<String>) {
         addLinesToTrainingSet()
         configureNetwork(network, Sigmoid(), neuronsByLayer)
         makeNetworkTrain(network, 100)
-        //makePrecisionAndErrorGraphs(network)
+        makePrecisionAndErrorGraphs(network)
         feedPredictionSetsToNetwork(network)
         printConfusionData()
     }
